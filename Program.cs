@@ -1,73 +1,68 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 class BankAccount
 {
-    public string AccountHolder { get; }
-    public decimal Balance { get; private set; }
+    private string accountHolder;
+    private decimal balance;
 
-    public BankAccount(string accountHolder, decimal initialBalance)
+    public BankAccount(string accountHolder, decimal initialDeposit)
     {
-        AccountHolder = accountHolder;
-        Balance = initialBalance;
+        this.accountHolder = accountHolder;
+        this.balance = initialDeposit;
     }
 
     public void Deposit(decimal amount)
     {
-        if (amount <= 0)
+        if (amount > 0)
         {
-            Console.WriteLine("Deposit amount must be greater than zero.");
-            return;
+            balance += amount;
+            Console.WriteLine($"Deposit of {amount:C} successful.");
         }
-
-        Balance += amount;
-        Console.WriteLine($"Deposit successful. New balance: {Balance:C}");
+        else
+        {
+            Console.WriteLine("Invalid deposit amount.");
+        }
     }
 
     public void Withdraw(decimal amount)
     {
-        if (amount <= 0)
+        if (amount > 0 && balance >= amount)
         {
-            Console.WriteLine("Withdrawal amount must be greater than zero.");
-            return;
+            balance -= amount;
+            Console.WriteLine($"Withdrawal of {amount:C} successful.");
         }
-
-        if (amount > Balance)
+        else
         {
-            Console.WriteLine("Insufficient funds for withdrawal.");
-            return;
+            Console.WriteLine("Invalid withdrawal amount or insufficient funds.");
         }
-
-        Balance -= amount;
-        Console.WriteLine($"Withdrawal successful. New balance: {Balance:C}");
     }
 
     public void CheckBalance()
     {
-        Console.WriteLine($"Account Holder: {AccountHolder}");
-        Console.WriteLine($"Current Balance: {Balance:C}");
+        Console.WriteLine($"Current Balance: {balance:C}");
     }
 }
 
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
         BankAccount account = null;
 
         while (true)
         {
-            Console.WriteLine("\nOptions:");
+            Console.WriteLine("\nMain Menu:");
             Console.WriteLine("1. Create Account");
             Console.WriteLine("2. Access Account");
             Console.WriteLine("3. Exit");
 
             Console.Write("Enter your choice (1-3): ");
-            string choice = Console.ReadLine();
+            string mainChoice = Console.ReadLine();
 
-            switch (choice)
+            switch (mainChoice)
             {
                 case "1":
                     Console.Write("Enter account holder's name: ");
@@ -114,9 +109,12 @@ class Program
             Console.WriteLine("1. Deposit");
             Console.WriteLine("2. Withdraw");
             Console.WriteLine("3. Check Balance");
-            Console.WriteLine("4. Go Back to Main Menu");
+            Console.WriteLine("4. Transfer Funds");
+            Console.WriteLine("5. Change Account Holder Name");
+            Console.WriteLine("6. Apply for Loan");
+            Console.WriteLine("7. Go Back to Main Menu");
 
-            Console.Write("Enter your choice (1-4): ");
+            Console.Write("Enter your choice (1-7): ");
             string choice = Console.ReadLine();
 
             switch (choice)
@@ -150,13 +148,26 @@ class Program
                     break;
 
                 case "4":
+                    Console.WriteLine("Feature not implemented yet.");
+                    break;
+
+                case "5":
+                    Console.WriteLine("Feature not implemented yet.");
+                    break;
+
+                case "6":
+                    Console.WriteLine("Feature not implemented yet.");
+                    break;
+
+                case "7":
                     Console.WriteLine("Returning to the main menu.");
                     return;
 
                 default:
-                    Console.WriteLine("Invalid choice. Please enter a number between 1 and 4.");
+                    Console.WriteLine("Invalid choice. Please enter a number between 1 and 7.");
                     break;
             }
         }
     }
 }
+
